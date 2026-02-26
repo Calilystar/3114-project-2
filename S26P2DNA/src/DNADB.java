@@ -1,8 +1,8 @@
 // -------------------------------------------------------------------------
 
 /**
- * The database implementation for this project.
- * This manages the commands for the DNA tree.
+ * The database implementation for this project. This manages the commands for
+ * the DNA tree.
  *
  * @author CS3114/5040 Staff
  * @version Spring 2026
@@ -35,13 +35,15 @@ public class DNADB implements DNA {
         }
         else {
             for (int i = 0; i < sequence.length(); i++) {
-                if (sequence.charAt(i) != 'A' || sequence.charAt(i) != 'G'
-                    || sequence.charAt(i) != 'C' || sequence.charAt(i) != 'T') {
+                if (sequence.charAt(i) != 'A' && sequence.charAt(i) != 'G'
+                    && sequence.charAt(i) != 'C' && sequence.charAt(i) != 'T') {
                     return "Bad Input Sequence |" + sequence + "|\r\n";
                 }
+
             }
+            return "Sequence |" + sequence + "| inserted";
         }
-        return null;
+
     }
 
 
@@ -54,7 +56,20 @@ public class DNADB implements DNA {
      * @return The outcomes message string
      */
     public String remove(String sequence) {
-        return null;
+        if (sequence == null) {
+            return "Bad input: Sequence may not be null\r\n";
+        }
+        else if (sequence.equals("")) {
+            return "Bad input: Sequence may not be empty\r\n";
+        }
+        for (int i = 0; i < sequence.length(); i++) {
+            if (sequence.charAt(i) != 'A' && sequence.charAt(i) != 'G'
+                && sequence.charAt(i) != 'C' && sequence.charAt(i) != 'T') {
+                return "Bad Input Sequence |" + sequence + "|\r\n";
+            }
+
+        }
+        return "Sequence |" + sequence + "| does not exist\r\n";
     }
 
 
@@ -100,12 +115,27 @@ public class DNADB implements DNA {
      * @return the print string
      */
     public String search(String sequence) {
-        for (int i = 0; i < sequence.length(); i++) {
-            if (sequence.charAt(i) != 'A' || sequence.charAt(i) != 'G'
-                || sequence.charAt(i) != 'C' || sequence.charAt(i) != 'T') {
-                return "Bad Input Sequence |" + sequence + "|\r\n";
+        if (sequence == null) {
+            return "Bad input: Sequence may not be null\r\n";
+
+        }
+        if (sequence.equals("")) {
+            return "No sequence found\r\n # of nodes visited: 1"; 
+        }
+
+        for (int i = 0; i < sequence.length() - 1; i++) {
+            if (sequence.charAt(i) != 'A' && sequence.charAt(i) != 'G'
+                && sequence.charAt(i) != 'C' && sequence.charAt(i) != 'T') {
+                return "Bad Input sequence |" + sequence + "|\r\n";
             }
         }
+        if (sequence.charAt(sequence.length() - 1) != 'A' && sequence.charAt(
+            sequence.length() - 1) != 'G' && sequence.charAt(sequence.length()
+                - 1) != 'C' && sequence.charAt(sequence.length() - 1) != 'T'
+            && sequence.charAt(sequence.length() - 1) != '$') {
+            return "Bad Input sequence |" + sequence + "|\r\n";
+        }
         return null;
+
     }
 }
