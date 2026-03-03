@@ -1,40 +1,64 @@
 
-public class InternalNode implements DNA{
-
-    @Override
-    public String insert(String sequence) {
-        // TODO Auto-generated method stub
-        return null;
+public class InternalNode implements DNANode{
+    public DNANode[] children;
+    
+    
+    /** 
+     * children[i] = A G C T $ in that order, but currently should be pointing to flyweight (placeholder)
+     * until insert is called.
+     * @param placeholder
+     */
+    public InternalNode(DNANode placeholder) {
+        children = new DNANode[5];
+        
+        for(int i = 0 ; i < 5 ; i++) {
+            children[i] = placeholder;
+        }
     }
 
     @Override
-    public String remove(String sequence) {
-        // TODO Auto-generated method stub
-        return null;
+    public DNANode insert(String sequence, int level) {
+        int index;
+        if(level >= sequence.length()) {
+            index = 4;
+        }
+        index = this.getCharIndex(sequence.charAt(level));
+        children[index] = children[index].insert(sequence, level + 1);
+        return this;
     }
 
     @Override
-    public String print() {
-        // TODO Auto-generated method stub
+    public DNANode remove(String sequence, int level) {
+        int index = this.getCharIndex(sequence.charAt(level));
         return null;
     }
 
-    @Override
-    public String printLengths() {
-        // TODO Auto-generated method stub
-        return null;
-    }
+    
 
     @Override
-    public String printStats() {
+    public DNANode search(String sequence, int level) {
         // TODO Auto-generated method stub
         return null;
+    }
+    
+    public int getCharIndex(char x) {
+        switch (x) {
+            case 'A':
+                return 0;
+            case 'G':
+                return 1;
+            case 'C':
+                return 2;
+            case 'T':
+                return 3;
+            case '$':
+                return 4;
+            
+            default:
+                return -1;
+        }
     }
 
-    @Override
-    public String search(String sequence) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+    
 
 }

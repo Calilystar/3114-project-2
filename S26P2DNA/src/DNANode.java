@@ -15,9 +15,11 @@ public interface DNANode {
      * 
      * @param sequence
      *            The sequence to insert
+     * @param level
+     *            the level on the DNA tree
      * @return The outcomes message string
      */
-    public String insert(String sequence);
+    public DNANode insert(String sequence, int level);
 
 
     // ----------------------------------------------------------
@@ -26,37 +28,14 @@ public interface DNANode {
      * 
      * @param sequence
      *            The sequence to remove
+     * @param level
+     *            the level on the DNA tree
      * @return The outcomes message string
      */
-    public String remove(String sequence);
+    public DNANode remove(String sequence, int level);
 
 
-    // ----------------------------------------------------------
-    /**
-     * Print the tree
-     * 
-     * @return the print string
-     */
-    public String print();
-
-
-    // ----------------------------------------------------------
-    /**
-     * Print the lengths
-     * 
-     * @return the print string
-     */
-    public String printLengths();
-
-
-    // ----------------------------------------------------------
-    /**
-     * Print the stats
-     * 
-     * @return the print string
-     */
-    public String printStats();
-
+    
 
     // ----------------------------------------------------------
     /**
@@ -64,7 +43,9 @@ public interface DNANode {
      * 
      * @param sequence
      *            The sequence to search for
+     * @param level
+     *            the level on the DNA tree
      * @return the print string
      */
-    public String search(String sequence);
+    public DNANode search(String sequence, int level);
 }

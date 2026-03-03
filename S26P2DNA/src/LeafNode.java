@@ -1,40 +1,27 @@
 
-public class LeafNode implements DNA{
+public class LeafNode implements DNANode{
 
     @Override
-    public String insert(String sequence) {
+    public DNANode insert(String sequence, int level) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public String remove(String sequence) {
+    public DNANode remove(String sequence, int level) {
         // TODO Auto-generated method stub
         return null;
     }
+
+    
 
     @Override
-    public String print() {
+    public DNANode search(String sequence, int level) {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public String printLengths() {
-        // TODO Auto-generated method stub
-        return null;
-    }
+    
 
-    @Override
-    public String printStats() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public String search(String sequence) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
+    
 }
