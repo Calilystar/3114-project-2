@@ -1,6 +1,9 @@
 
 /**
- * {Project Description Here}
+ * This project stores and searches for DNA sequences using a tree structure for
+ * storing that allows for efficient searching. This way, we can
+ * determine whether a specified sequence is in the database as well as be able
+ * to find any sequence in the database that matches a search prefix.
  */
 
 import java.io.IOException;
@@ -8,8 +11,8 @@ import java.io.IOException;
 /**
  * The class containing the main method.
  *
- * @author {Your Name Here}
- * @version {Put Something Here}
+ * @author Callie Chiang (ccsea), Jocelyn Chu (jocelynchu)
+ * @version 2026.03.03
  */
 
 // On my honor:
