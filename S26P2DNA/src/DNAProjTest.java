@@ -68,25 +68,34 @@ public class DNAProjTest extends TestCase {
             .search("A$A"));
     }
 
+
     public void testSearchNull() {
-        assertFuzzyEquals("Bad input: Sequence may not be null\r\n", it.search(null));
+        assertFuzzyEquals("Bad input: Sequence may not be null\r\n", it.search(
+            null));
     }
-    
+
+
     public void testBadLetter() {
         assertFuzzyEquals("Bad input sequence |ABC|\r\n", it.search("ABC"));
     }
-    
+
+
     public void testRemoveNull() {
-        assertFuzzyEquals("Bad input: Sequence may not be null\r\n", it.remove(null));
+        assertFuzzyEquals("Bad input: Sequence may not be null\r\n", it.remove(
+            null));
     }
-    
+
+
     public void testRemoveEmpty() {
-        assertFuzzyEquals("Bad input: Sequence may not be empty\r\n", it.remove(""));
+        assertFuzzyEquals("Bad input: Sequence may not be empty\r\n", it.remove(
+            ""));
     }
-    
+
+
     public void testRemoveBadLetter() {
         assertFuzzyEquals("Bad Input Sequence |ABC|\r\n", it.remove("ABC"));
     }
+
 
     /**
      * Tests inserting a single sequqence.
@@ -205,33 +214,92 @@ public class DNAProjTest extends TestCase {
             + " E\r\n" + " GAA A:66.67 C:0.00 G:33.33 T:0.00\r\n" + " E\r\n"
             + " E", it.printStats());
     }
-    
+
+
     public void testPrintEmptyTree() {
         assertFuzzyEquals("tree dump:\r\nE", it.print());
         assertFuzzyEquals("tree dump with lengths:\r\nE", it.printLengths());
         assertFuzzyEquals("tree dump with stats:\r\nE", it.printStats());
     }
-    
+
+
     public void testSearchNonExistentLong() {
         it.insert("AAAA");
-        assertFuzzyEquals("No sequence found\r\n# of nodes visited: 1", it.search("AAAG$"));
+        assertFuzzyEquals("No sequence found\r\n# of nodes visited: 1", it
+            .search("AAAG$"));
     }
+
 
     public void testRemoveFromEmpty() {
         assertFuzzyEquals("Sequence |A| does not exist", it.remove("A"));
     }
 
+
     public void testStatsOnlyT() {
         it.insert("TTTT");
-        assertFuzzyEquals("tree dump with stats:\r\nTTTT A:0.00 C:0.00 G:0.00 T:100.00", it.printStats());
-    }
-    
-    public void testPrefixSearchFailsAtLeaf() {
-        it.insert("ACGT");
-        assertFuzzyEquals("No sequence found\r\n# of nodes visited: 1", it.search("T"));
+        assertFuzzyEquals(
+            "tree dump with stats:\r\nTTTT A:0.00 C:0.00 G:0.00 T:100.00", it
+                .printStats());
     }
 
+
+    public void testPrefixSearchFailsAtLeaf() {
+        it.insert("ACGT");
+        assertFuzzyEquals("No sequence found\r\n# of nodes visited: 1", it
+            .search("T"));
+    }
+
+
     /**
-     * 
+     * tests insert when leaf splits
      */
+    public void testLeafSplitInsert() {
+        it.insert("AAAA");
+        assertFuzzyEquals("Sequence |AAAT| inserted", it.insert("AAAT"));
+
+        String tree = it.print();
+        assertTrue(tree.contains("AAAA"));
+        assertTrue(tree.contains("AAAT"));
+    }
+
+
+    /**
+     * test InternalNode back to leaf after remove
+     */
+    public void testInternalBackToLeaf() {
+        it.insert("AAAA");
+        it.insert("AAAT");
+
+        assertFuzzyEquals("Sequence |AAAT| removed", it.remove("AAAT"));
+        assertFuzzyEquals("tree dump:\r\nAAAA", it.print());
+
+    }
+
+
+    /**
+     * test removing all sequences
+     */
+    public void testRemoveAllSequences() {
+        it.insert("AAAA");
+
+        assertFuzzyEquals("Sequence |AAAA| removed", it.remove("AAAA"));
+        assertFuzzyEquals("tree dump:\r\nE", it.print());
+    }
+
+
+    /**
+     * test prefix searching when there are multiple branches
+     */
+    public void testMultipleBranchPrefix() {
+        it.insert("ACGT");
+        it.insert("ACGA");
+        it.insert("ACGC");
+
+        String res = it.search("ACG");
+
+        assertTrue(res.contains("ACGT"));
+        assertTrue(res.contains("ACGA"));
+        assertTrue(res.contains("ACGC"));
+
+    }
 }
