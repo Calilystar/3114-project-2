@@ -366,7 +366,7 @@ public class DNADB implements DNA {
                 else if (chara == 'G') {
                     g++;
                 }
-                else if (chara == 'T') {
+                else {
                     t++;
                 }
             }
