@@ -10,7 +10,7 @@ public class InternalNode implements DNANode {
     public DNANode[] children;
 
     /**
-     * children[i] = A G C T $ in that order, but currently should be pointing
+     * children[i] = A C G T $ in that order, but currently should be pointing
      * to flyweight (placeholder)
      * until insert is called.
      * 
@@ -127,9 +127,9 @@ public class InternalNode implements DNANode {
         switch (x) {
             case 'A':
                 return 0;
-            case 'G':
-                return 1;
             case 'C':
+                return 1;
+            case 'G':
                 return 2;
             case 'T':
                 return 3;
