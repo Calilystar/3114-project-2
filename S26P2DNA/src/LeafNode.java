@@ -3,7 +3,7 @@ public class LeafNode implements DNANode{
 
     @Override
     public DNANode insert(String sequence, int level) {
-        // TODO Auto-generated method stub
+        
         return null;
     }
 
