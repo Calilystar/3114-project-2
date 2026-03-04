@@ -47,14 +47,13 @@ public class DNADB implements DNA {
 
         }
 
-        DNANode oldRoot = root;
-
-        root = root.insert(sequence, 0);
-
-        if (oldRoot == root) {
+        String finished = this.search(sequence + "$");
+        
+        if (finished.startsWith("No sequence found") == false && finished.contains("Bad input") == false) {
             return "Sequence |" + sequence + "| already exists";
         }
 
+        root = root.insert(sequence, 0);
         return "Sequence |" + sequence + "| inserted";
     }
 
@@ -85,15 +84,15 @@ public class DNADB implements DNA {
 
         }
 
-        DNANode newRoot = root.remove(sequence, 0);
-
-        if (newRoot == root) {
+        String finished = this.search(sequence + "$");
+        if (finished.startsWith("No sequence found") || finished.contains("Bad input")) {
             return "Sequence |" + sequence + "| does not exist";
         }
 
-        root = newRoot;
-
+        root = root.remove(sequence, 0);
         return "Sequence |" + sequence + "| removed";
+
+        
     }
 
 

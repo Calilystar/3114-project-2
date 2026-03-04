@@ -162,7 +162,7 @@ public class DNAProjTest extends TestCase {
 
 
     /**
-     * 
+     * Tests for if all ACTG is equal in stats.
      */
     public void testPrintStats25Equal() {
         it.insert("ACTG");
@@ -172,7 +172,7 @@ public class DNAProjTest extends TestCase {
 
 
     /**
-     * 
+     * Tests for only A and C equal in stats.
      */
     public void testPrintStats50Equal() {
         it.insert("AC");
@@ -183,7 +183,7 @@ public class DNAProjTest extends TestCase {
 
 
     /**
-     * 
+     * Tests for only one letter, A, in stats.
      */
     public void testPrintStats100() {
         it.insert("AA");
@@ -194,7 +194,7 @@ public class DNAProjTest extends TestCase {
 
 
     /**
-     * 
+     * Tests for differences in stat numbers.
      */
     public void testPrintStatsDifferent() {
         it.insert("ACACTA");
@@ -203,6 +203,9 @@ public class DNAProjTest extends TestCase {
     }
 
 
+    /**
+     * Tests for if the stats are different for multiple inserts.
+     */
     public void testPrintStatsMultiple() {
         it.insert("ACA");
         it.insert("ACC");
@@ -216,6 +219,9 @@ public class DNAProjTest extends TestCase {
     }
 
 
+    /**
+     * Tests for printing an empty tree.
+     */
     public void testPrintEmptyTree() {
         assertFuzzyEquals("tree dump:\r\nE", it.print());
         assertFuzzyEquals("tree dump with lengths:\r\nE", it.printLengths());
@@ -223,6 +229,9 @@ public class DNAProjTest extends TestCase {
     }
 
 
+    /**
+     * Tests for inserting and searching for different things.
+     */
     public void testSearchNonExistentLong() {
         it.insert("AAAA");
         assertFuzzyEquals("No sequence found\r\n# of nodes visited: 1", it
@@ -230,11 +239,17 @@ public class DNAProjTest extends TestCase {
     }
 
 
+    /**
+     * Tests for removing from an empty tree.
+     */
     public void testRemoveFromEmpty() {
         assertFuzzyEquals("Sequence |A| does not exist", it.remove("A"));
     }
 
 
+    /**
+     * Tests for a singular stat in T.
+     */
     public void testStatsOnlyT() {
         it.insert("TTTT");
         assertFuzzyEquals(
@@ -243,6 +258,9 @@ public class DNAProjTest extends TestCase {
     }
 
 
+    /**
+     * Tests for failing a prefix search at a leaf.
+     */
     public void testPrefixSearchFailsAtLeaf() {
         it.insert("ACGT");
         assertFuzzyEquals("No sequence found\r\n# of nodes visited: 1", it
@@ -301,5 +319,23 @@ public class DNAProjTest extends TestCase {
         assertTrue(res.contains("ACGA"));
         assertTrue(res.contains("ACGC"));
 
+    }
+
+
+    /**
+     * Tests removing a sequence to make the internal node a leaf.
+     */
+    public void testRemainder() {
+        it.insert("A");
+        it.insert("ACA");
+        it.insert("ACT");
+
+        assertFuzzyEquals("Sequence |A| removed", it.remove("A"));
+
+        
+        assertFuzzyEquals("tree dump:\r\n" + "I\r\n" + " I\r\n" + "  E\r\n"
+            + "  I\r\n" + "   ACA\r\n" + "   E\r\n" + "   E\r\n" + "   ACT\r\n"
+            + "   E\r\n" + "  E\r\n" + "  E\r\n" + "  E\r\n" + " E\r\n"
+            + " E\r\n" + " E\r\n" + " E", it.print());
     }
 }
