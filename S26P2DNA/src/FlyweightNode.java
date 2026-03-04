@@ -17,7 +17,7 @@ public class FlyweightNode implements DNANode{
     
 
     @Override
-    public DNANode search(String sequence, int level) {
+    public String search(String sequence, int level) {
         // TODO Auto-generated method stub
         return null;
     }

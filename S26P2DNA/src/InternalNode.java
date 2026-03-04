@@ -65,9 +65,15 @@ public class InternalNode implements DNANode{
     
 
     @Override
-    public DNANode search(String sequence, int level) {
-        // TODO Auto-generated method stub
-        return null;
+    public String search(String sequence, int level) {
+        int index;
+        if (level < sequence.length()) {
+            index = this.getCharIndex(sequence.charAt(level));
+        }
+        else {
+            index = 4;
+        }
+        return children[index].search(sequence, level + 1);
     }
     
     public int getCharIndex(char x) {

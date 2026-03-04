@@ -47,5 +47,5 @@ public interface DNANode {
      *            the level on the DNA tree
      * @return the print string
      */
-    public DNANode search(String sequence, int level);
+    public String search(String sequence, int level);
 }
