@@ -169,17 +169,74 @@ public class DNADB implements DNA {
             if (c != 'A' && c != 'G' && c != 'C' && c != 'T' && c != '$') {
                 return "Bad input sequence |" + sequence + "|\r\n";
             }
+
+            if (c == '$' && i != sequence.length() - 1) {
+                return "Bad input sequence |" + sequence + "|\r\n";
+            }
         }
 
         String str = sequence.replace("$", "");
+        boolean exactMatch = sequence.endsWith("$");
 
-        String res = root.search(str, 0);
+        int[] visited = { 0 };
+        StringBuilder sb = new StringBuilder();
 
-        if (res == null) {
-            return "No sequence found\r\n# of nodes visited: 3";
+        this.searchHelper(root, str, 0, exactMatch, visited, sb);
+
+        String res = sb.toString().trim();
+
+        if (res.isEmpty()) {
+            return "No sequence found\r\n# of nodes visited: " + visited[0];
         }
 
-        return res + "\r\n# of nodes visited: 4";
+        return res + "\r\n# of nodes visited: " + visited[0];
+    }
+
+
+    private void searchHelper(
+        DNANode node,
+        String str,
+        int depth,
+        boolean match,
+        int[] visited,
+        StringBuilder sb) {
+        visited[0]++;
+
+        if (node == FlyweightNode.getInstanceOf()) {
+            return;
+        }
+        else if (node instanceof LeafNode) {
+            LeafNode leaf = (LeafNode)node;
+            String leafSeq = leaf.getSequence();
+
+            if (match) {
+                if (leafSeq.equals(str)) {
+                    sb.append(leafSeq).append("\r\n");
+                }
+            }
+            else {
+                if (leafSeq.startsWith(str)) {
+                    sb.append(leafSeq).append("\r\n");
+                }
+            }
+        }
+        else {
+            InternalNode internal = (InternalNode)node;
+
+            if (depth < str.length()) {
+                char c = str.charAt(depth);
+                int childIndex = internal.getCharIndex(c);
+                searchHelper(internal.children[childIndex], str, depth + 1,
+                    match, visited, sb);
+            }
+            else {
+                for (int i = 0; i < internal.children.length; i++) {
+                    searchHelper(internal.children[i], str, depth + 1, match,
+                        visited, sb);
+                }
+            }
+        }
+
     }
 
     // ----------------------------------------------------------
@@ -281,7 +338,7 @@ public class DNADB implements DNA {
      */
     private void printNodeStats(DNANode node, int depth, StringBuilder sb) {
         for (int i = 0; i < depth; i++) {
-            sb.append(" ");
+            sb.append("  ");
         }
 
         // flyweight/empty node

@@ -149,7 +149,7 @@ public class DNAProjTest extends TestCase {
     public void testPrintStats50Equal() {
         it.insert("AC");
         assertFuzzyEquals("tree dump with stats:\r\n"
-            + "ACTG A:50.00 C:50.00 G:0.00 T:0.00", it.printStats());
+            + "AC A:50.00 C:50.00 G:0.00 T:0.00", it.printStats());
 
     }
 
@@ -160,7 +160,7 @@ public class DNAProjTest extends TestCase {
     public void testPrintStats100() {
         it.insert("AA");
         assertFuzzyEquals("tree dump with stats:\r\n"
-            + "ACTG A:100.00 C:0.00 G:0.00 T:0.00", it.printStats());
+            + "AA A:100.00 C:0.00 G:0.00 T:0.00", it.printStats());
 
     }
 
@@ -171,7 +171,20 @@ public class DNAProjTest extends TestCase {
     public void testPrintStatsDifferent() {
         it.insert("ACACTA");
         assertFuzzyEquals("tree dump with stats:\r\n"
-            + "ACTG A:50.00 C:33.33 G:0.00 T:16.67.00", it.printStats());
+            + "ACACTA A:50.00 C:33.33 G:0.00 T:16.67", it.printStats());
+    }
+
+
+    public void testPrintStatsMultiple() {
+        it.insert("ACA");
+        it.insert("ACC");
+        it.insert("GAA");
+        assertFuzzyEquals("tree dump with stats:\r\n" + "I\r\n" + " I\r\n"
+            + "  E\r\n" + "  I\r\n" + "   ACA A:66.67 C:33.33 G:0.00 T:0.00\r\n"
+            + "   ACC A:33.33 C:66.67 G:0.00 T:0.00\r\n" + "   E\r\n"
+            + "   E\r\n" + "   E\r\n" + "  E\r\n" + "  E\r\n" + "  E\r\n"
+            + " E\r\n" + " GAA A:66.67 C:0.00 G:33.33 T:0.00\r\n" + " E\r\n"
+            + " E", it.printStats());
     }
 
     /**
