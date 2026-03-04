@@ -12,7 +12,7 @@ public class InternalNode implements DNANode{
         children = new DNANode[5];
         
         for(int i = 0 ; i < 5 ; i++) {
-            children[i] = placeholder;
+            children[i] = FlyweightNode.getInstanceOf();
         }
     }
 
@@ -29,8 +29,37 @@ public class InternalNode implements DNANode{
 
     @Override
     public DNANode remove(String sequence, int level) {
-        int index = this.getCharIndex(sequence.charAt(level));
-        return null;
+        int index;
+        if (level < sequence.length()) {
+            index = this.getCharIndex(sequence.charAt(level));
+        }
+        else {
+            index = 4;
+        }
+        children[index] = children[index].remove(sequence, level + 1);
+        
+        int count = 0;
+        DNANode remainder = null;
+        
+        for(int i = 0; i < children.length - 1 ; i ++) {
+            if(children[i] instanceof FlyweightNode) {
+                count += 1;
+            }
+            else {
+                remainder = children[i];
+            }
+        
+        }
+        
+        if (count == 5) {
+            return FlyweightNode.getInstanceOf();
+        }
+        if (count == 4) { 
+            if (remainder instanceof LeafNode) {
+                return remainder;
+            }
+        }
+        return this;
     }
 
     
