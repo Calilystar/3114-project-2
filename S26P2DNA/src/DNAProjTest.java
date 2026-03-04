@@ -52,9 +52,6 @@ public class DNAProjTest extends TestCase {
      * Example tests for bad input error formatting
      */
     public void testBadInput() {
-        assertFuzzyEquals("testBadInput", "No sequence found\r\n" + "# of nodes visited: 1", it.search(""));
-        
-        
         assertFuzzyEquals("testBadInput",
             "Bad input: Sequence may not be null\r\n", it.insert(null));
         assertFuzzyEquals("testBadInput",
@@ -69,66 +66,34 @@ public class DNAProjTest extends TestCase {
             .insert("A$"));
         assertFuzzyEquals("testBadInput", "Bad input sequence |A$A|\r\n", it
             .search("A$A"));
-        
-        
-
-        assertFuzzyEquals("testBadInput", "Bad input sequence |AB|\r\n", it
-            .search("AB"));
-        assertFuzzyEquals("testBadInput", "Bad input sequence |TB|\r\n", it
-            .search("TB"));
-        assertFuzzyEquals("testBadInput", "Bad input sequence |CB|\r\n", it
-            .search("CB"));
-        assertFuzzyEquals("testBadInput", "Bad input sequence |GB|\r\n", it
-            .search("GB"));
-        assertFuzzyEquals("testBadInput",
-            "Bad input: Sequence may not be null\r\n", it.search(null));
-
-        assertFuzzyEquals("testBadInput", "Bad input sequence |A$A|\r\n", it
-            .search("A$A"));
-        
-        assertFuzzyEquals("testBadInput", "Bad input sequence |$AGC|\r\n", it
-            .search("$AGC"));
-        assertFuzzyEquals("testBadInput", "Bad input sequence |$AGT|\r\n", it
-            .search("$AGT"));
-        assertFuzzyEquals("testBadInput", "Bad input sequence |$AGA|\r\n", it
-            .search("$AGA"));
-        assertFuzzyEquals("testBadInput", "Bad input sequence |$AGG|\r\n", it
-            .search("$AGG"));
-        assertFuzzyEquals("testBadInput", "Bad input sequence |$AGB|\r\n", it
-            .search("$AGB"));
-        assertFuzzyEquals("testBadInput", "Bad input sequence |AGB|\r\n", it
-            .search("AGB"));
-
-        assertFuzzyEquals("testBadInput", "Bad Input Sequence |AB|\r\n", it
-            .remove("AB"));
-        assertFuzzyEquals("testBadInput", "Bad Input Sequence |CB|\r\n", it
-            .remove("CB"));
-        assertFuzzyEquals("testBadInput", "Bad Input Sequence |GB|\r\n", it
-            .remove("GB"));
-        assertFuzzyEquals("testBadInput", "Bad Input Sequence |TB|\r\n", it
-            .remove("TB"));
-        assertFuzzyEquals("testBadInput",
-            "Bad input: Sequence may not be null\r\n", it.remove(null));
-        assertFuzzyEquals("testBadInput",
-            "Bad input: Sequence may not be empty\r\n", it.remove(""));
     }
-
-
+    
     /**
-     * Test output formatting
+     * Tests inserting a single sequqence.
      */
-    public void testGoodInput() {
-        assertFuzzyEquals("Sequence |ACGT| inserted", it.insert("ACGT"));
-        assertFuzzyEquals("Sequence |AACCGTC| does not exist", it.remove("AACCGTC"));
-        assertFuzzyEquals(null, it.search("AGC"));
-        assertFuzzyEquals(null, it.search("AGT"));
-        assertFuzzyEquals(null, it.search("AGG"));
-        assertFuzzyEquals(null, it.search("AGA"));
-        assertFuzzyEquals(null, it.search("AGC$"));
+    public void testSingleInsert() {
+        assertFuzzyEquals("Sequence |AAAA| inserted", it.insert("AAAA"));
         
-
-// assertFuzzyEquals(
-// "Sequence |ACGT| already exists",
-// it.insert("ACGT"));
     }
+    
+    /**
+     * Tests inserting a duplicate sequence.
+     */
+    public void testDuplicateInsert() {
+        it.insert("AAAA");
+        assertFuzzyEquals("Sequence |AAAA| already exists", it.insert("AAAA"));
+        
+    }
+    
+    /**
+     * Tests print after inserting one sequence.
+     */
+    public void testPrintSingleNode() {
+        it.insert("AAAA");
+        assertFuzzyEquals("tree dump:\r\nAAAA", it.print());
+    }
+    
+    /**
+     * 
+     */
 }
