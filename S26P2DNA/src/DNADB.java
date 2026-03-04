@@ -124,7 +124,7 @@ public class DNADB implements DNA {
     public String printLengths() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("tree dump with length:\r\n");
+        sb.append("tree dump with lengths:\r\n");
 
         printNodeLength(root, 0, sb);
 
@@ -161,6 +161,14 @@ public class DNADB implements DNA {
         if (sequence == null) {
             return "Bad input: Sequence may not be null\r\n";
 
+        }
+
+        for (int i = 0; i < sequence.length(); i++) {
+            char c = sequence.charAt(i);
+
+            if (c != 'A' && c != 'G' && c != 'C' && c != 'T' && c != '$') {
+                return "Bad input sequence |" + sequence + "|\r\n";
+            }
         }
 
         String str = sequence.replace("$", "");
@@ -308,12 +316,11 @@ public class DNADB implements DNA {
 
             int len = seq.length();
 
-            sb.append(seq).append(seq).append(" A:").append(String.format(
-                "%.2f", 100.0 * a / len)).append(" C:").append(String.format(
-                    "%.2f", 100.0 * c / len)).append(" G:").append(String
-                        .format("%.2f", 100.0 * g / len)).append(" T:").append(
-                            String.format("%.2f", 100.0 * t / len)).append(
-                                "\r\n");
+            sb.append(seq).append(" A:").append(String.format("%.2f", 100.0 * a
+                / len)).append(" C:").append(String.format("%.2f", 100.0 * c
+                    / len)).append(" G:").append(String.format("%.2f", 100.0 * g
+                        / len)).append(" T:").append(String.format("%.2f", 100.0
+                            * t / len)).append("\r\n");
         }
 
         else {

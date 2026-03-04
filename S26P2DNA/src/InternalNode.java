@@ -42,7 +42,7 @@ public class InternalNode implements DNANode {
             index = 4;
         }
         else {
-            index = this.getCharIndex(sequence.charAt(level));
+            index = getCharIndex(sequence.charAt(level));
         }
 
         children[index] = children[index].insert(sequence, level + 1);
