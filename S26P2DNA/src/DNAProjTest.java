@@ -67,24 +67,27 @@ public class DNAProjTest extends TestCase {
         assertFuzzyEquals("testBadInput", "Bad input sequence |A$A|\r\n", it
             .search("A$A"));
     }
-    
+
+
     /**
      * Tests inserting a single sequqence.
      */
     public void testSingleInsert() {
         assertFuzzyEquals("Sequence |AAAA| inserted", it.insert("AAAA"));
-        
+
     }
-    
+
+
     /**
      * Tests inserting a duplicate sequence.
      */
     public void testDuplicateInsert() {
         it.insert("AAAA");
         assertFuzzyEquals("Sequence |AAAA| already exists", it.insert("AAAA"));
-        
+
     }
-    
+
+
     /**
      * Tests print after inserting one sequence.
      */
@@ -92,7 +95,85 @@ public class DNAProjTest extends TestCase {
         it.insert("AAAA");
         assertFuzzyEquals("tree dump:\r\nAAAA", it.print());
     }
-    
+
+
+    /**
+     * Only insert one sequence and print length
+     */
+    public void testPrintLengthsOfOne() {
+        it.insert("AGT");
+        assertFuzzyEquals("tree dump with lengths:\r\nAGT 3", it
+            .printLengths());
+
+    }
+
+
+    /**
+     * Insert two sequences of same internal node and print length
+     */
+    public void testPrintLengthsOfTwoSame() {
+        it.insert("AGT");
+        it.insert("A");
+
+        assertFuzzyEquals("tree dump with lengths:\r\n" + "I\r\n" + " I\r\n"
+            + "  E\r\n" + "  E\r\n" + "  AGT 3\r\n" + "  E\r\n" + "  A 1\r\n"
+            + " E\r\n" + " E\r\n" + " E\r\n" + " E", it.printLengths());
+    }
+
+
+    /**
+     * Insert two sequences of different internal nodes and print length
+     */
+    public void testPrintLengthsOfTwoDifferent() {
+        it.insert("AGT");
+        it.insert("GA");
+
+        assertFuzzyEquals("tree dump with lengths:\r\n" + "I\r\n" + " AGT 3\r\n"
+            + " E\r\n" + " GA 2\r\n" + " E\r\n" + " E", it.printLengths());
+    }
+
+
+    /**
+     * 
+     */
+    public void testPrintStats25Equal() {
+        it.insert("ACTG");
+        assertFuzzyEquals("tree dump with stats:\r\n"
+            + "ACTG A:25.00 C:25.00 G:25.00 T:25.00", it.printStats());
+    }
+
+
+    /**
+     * 
+     */
+    public void testPrintStats50Equal() {
+        it.insert("AC");
+        assertFuzzyEquals("tree dump with stats:\r\n"
+            + "ACTG A:50.00 C:50.00 G:0.00 T:0.00", it.printStats());
+
+    }
+
+
+    /**
+     * 
+     */
+    public void testPrintStats100() {
+        it.insert("AA");
+        assertFuzzyEquals("tree dump with stats:\r\n"
+            + "ACTG A:100.00 C:0.00 G:0.00 T:0.00", it.printStats());
+
+    }
+
+
+    /**
+     * 
+     */
+    public void testPrintStatsDifferent() {
+        it.insert("ACACTA");
+        assertFuzzyEquals("tree dump with stats:\r\n"
+            + "ACTG A:50.00 C:33.33 G:0.00 T:16.67.00", it.printStats());
+    }
+
     /**
      * 
      */
