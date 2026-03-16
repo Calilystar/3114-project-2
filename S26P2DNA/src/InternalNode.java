@@ -1,12 +1,15 @@
 
 /**
  * represents a branching node in the DNA tree that contains references to
- * children corresponding to A, G, C, T, and $.
+ * children corresponding to A, C, G, T, and $.
  * 
  * @author Callie Chiang (ccsea), Jocelyn Chu (jocelynchu)
  * @version 2026.03.03
  */
 public class InternalNode implements DNANode {
+    /**
+     * Child references for the internal node
+     */
     public DNANode[] children;
 
     /**
@@ -139,6 +142,16 @@ public class InternalNode implements DNANode {
             default:
                 return -1;
         }
+    }
+
+
+    /**
+     * Return children
+     * 
+     * @return The children array
+     */
+    public DNANode[] getChildren() {
+        return children;
     }
 
 }

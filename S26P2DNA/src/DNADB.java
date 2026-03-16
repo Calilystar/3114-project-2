@@ -48,8 +48,8 @@ public class DNADB implements DNA {
         }
 
         String finished = this.search(sequence + "$");
-        
-        if (finished.startsWith("No sequence found") == false && finished.contains("Bad input") == false) {
+
+        if (finished.startsWith("No sequence found") == false) {
             return "Sequence |" + sequence + "| already exists";
         }
 
@@ -85,14 +85,13 @@ public class DNADB implements DNA {
         }
 
         String finished = this.search(sequence + "$");
-        if (finished.startsWith("No sequence found") || finished.contains("Bad input")) {
+        if (finished.startsWith("No sequence found")) {
             return "Sequence |" + sequence + "| does not exist";
         }
 
         root = root.remove(sequence, 0);
         return "Sequence |" + sequence + "| removed";
 
-        
     }
 
 
@@ -229,9 +228,15 @@ public class DNADB implements DNA {
                     match, visited, sb);
             }
             else {
-                for (int i = 0; i < internal.children.length; i++) {
-                    searchHelper(internal.children[i], str, depth + 1, match,
+                if (match) {
+                    searchHelper(internal.children[4], str, depth + 1, match,
                         visited, sb);
+                }
+                else {
+                    for (int i = 0; i < internal.children.length; i++) {
+                        searchHelper(internal.children[i], str, depth + 1,
+                            match, visited, sb);
+                    }
                 }
             }
         }

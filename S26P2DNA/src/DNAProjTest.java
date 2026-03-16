@@ -332,10 +332,29 @@ public class DNAProjTest extends TestCase {
 
         assertFuzzyEquals("Sequence |A| removed", it.remove("A"));
 
-        
         assertFuzzyEquals("tree dump:\r\n" + "I\r\n" + " I\r\n" + "  E\r\n"
             + "  I\r\n" + "   ACA\r\n" + "   E\r\n" + "   E\r\n" + "   ACT\r\n"
             + "   E\r\n" + "  E\r\n" + "  E\r\n" + "  E\r\n" + " E\r\n"
             + " E\r\n" + " E\r\n" + " E", it.print());
     }
+
+// /**
+// * just testing something out
+// *
+// */
+// public void testSomethjing() {
+// it.insert("AGT");
+// it.insert("ACT");
+//
+// assertFuzzyEquals("Sequence |AGT| removed", it.remove("AGT"));
+// assertFuzzyEquals("No sequence found\r\n# of nodes visited: 1", it
+// .search("AGT"));
+// assertFuzzyEquals("Sequence |ACT| removed", it.remove("ACT"));
+// assertFuzzyEquals("No sequence found\r\n# of nodes visited: 1", it
+// .search("ACT"));
+// assertFuzzyEquals("No sequence found\r\n# of nodes visited: 1", it
+// .search(""));
+// }
+//
+//
 }
