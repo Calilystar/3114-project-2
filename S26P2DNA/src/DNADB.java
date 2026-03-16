@@ -190,6 +190,11 @@ public class DNADB implements DNA {
         return res + "\r\n# of nodes visited: " + visited[0];
     }
 
+    // ----------------------------------------------------------
+    /*
+     * Helper methods
+     */
+
 
     private void searchHelper(
         DNANode node,
@@ -229,8 +234,9 @@ public class DNADB implements DNA {
             }
             else {
                 if (match) {
-                    searchHelper(internal.children[4], str, depth + 1, match,
-                        visited, sb);
+                    int dollarIndex = internal.getCharIndex('$');
+                    searchHelper(internal.children[dollarIndex], str, depth + 1,
+                        match, visited, sb);
                 }
                 else {
                     for (int i = 0; i < internal.children.length; i++) {
@@ -242,11 +248,6 @@ public class DNADB implements DNA {
         }
 
     }
-
-    // ----------------------------------------------------------
-    /*
-     * Helper methods
-     */
 
 
     /**
@@ -260,9 +261,7 @@ public class DNADB implements DNA {
      *            The stringbuilder storing output
      */
     private void printNode(DNANode node, int depth, StringBuilder sb) {
-        for (int i = 0; i < depth; i++) {
-            sb.append(" ");
-        }
+        addIndent(sb, depth, " ");
 
         // flyweight/empty node
         if (node == FlyweightNode.getInstanceOf()) {
@@ -300,9 +299,7 @@ public class DNADB implements DNA {
      *            The stringbuilder storing output
      */
     private void printNodeLength(DNANode node, int depth, StringBuilder sb) {
-        for (int i = 0; i < depth; i++) {
-            sb.append(" ");
-        }
+        addIndent(sb, depth, " ");
 
         // flyweight/empty node
         if (node == FlyweightNode.getInstanceOf()) {
@@ -341,9 +338,7 @@ public class DNADB implements DNA {
      *            The stringbuilder storing output
      */
     private void printNodeStats(DNANode node, int depth, StringBuilder sb) {
-        for (int i = 0; i < depth; i++) {
-            sb.append("  ");
-        }
+        addIndent(sb, depth, "  ");
 
         // flyweight/empty node
         if (node == FlyweightNode.getInstanceOf()) {
@@ -393,5 +388,22 @@ public class DNADB implements DNA {
             }
         }
 
+    }
+
+
+    /**
+     * Appends the given indentation unit depth times.
+     *
+     * @param sb
+     *            the builder
+     * @param depth
+     *            number of times to indent
+     * @param unit
+     *            indentation string
+     */
+    private void addIndent(StringBuilder sb, int depth, String unit) {
+        for (int i = 0; i < depth; i++) {
+            sb.append(unit);
+        }
     }
 }
